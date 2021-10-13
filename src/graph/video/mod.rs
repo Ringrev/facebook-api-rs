@@ -242,7 +242,7 @@ impl VideoApi {
         file: File,
     ) -> seed::fetch::Result<PostResponse> {
         let uploaded_file = file.clone();
-        let upload_method = FileResult::file_analize(file).get_uploading_method();
+        let upload_method = FileResult::file_analyze(file).get_uploading_method();
 
         if upload_method == "non_resumable" {
             let form_data = VideoApi::create_form_data(uploaded_file, video_params);
@@ -278,7 +278,7 @@ impl VideoApi {
                 current_upload_phase = "start";
                 form_data.append_str(
                     "file_size",
-                    FileResult::file_analize(uploaded_file)
+                    FileResult::file_analyze(uploaded_file)
                         .get_file_size_byte_string()
                         .as_str(),
                 ); // add the video size
@@ -361,7 +361,7 @@ impl VideoApi {
 
         let start_phase_data = response.unwrap();
         end_offset = Some(start_phase_data.end_offset); // update from the facebook response
-        let chunked_file_data = FileResult::file_analize(file.clone()).clone();
+        let chunked_file_data = FileResult::file_analyze(file.clone()).clone();
 
         let final_response = FinalResponeResumableUpload::default().update_params(
             start_phase_data.video_id.clone(),
@@ -398,7 +398,7 @@ impl VideoApi {
                         let base_url = self.base_url.replace("EDGE", "videos");
                         let form_datas = self_data.resumable_formData(
                             UploadPhase::transfer,
-                            FileResult::file_analize(file.clone())
+                            FileResult::file_analyze(file.clone())
                                 .chunk_file(start_chunk, current_chunk_size)
                                 .get_chunked_file(),
                             file.clone(),
@@ -474,7 +474,7 @@ impl VideoApi {
 // still under consideration
 impl VideoApi {
     pub fn general_video(self, video_params: VideoParams, file: File) {
-        let uploading_method = FileResult::file_analize(file.clone()).get_uploading_method(); // this will return the uploading method based on the size       ;
+        let uploading_method = FileResult::file_analyze(file.clone()).get_uploading_method(); // this will return the uploading method based on the size       ;
 
         if uploading_method == "non_resumable" {
             // this means file can be upload with non  resumable method.
