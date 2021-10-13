@@ -94,7 +94,6 @@ struct InstaPostData {
     location_id: String, // this should be coded
 }
 
-
 fn build_Post(message: String, photo_url: String, link_url: String, video_url: String) -> PostData {
     PostData {
         ..PostData {
@@ -148,8 +147,6 @@ pub struct Model {
 //    Update
 // ------ ------
 // TODO simplify messages
-
-
 
 enum Msg {
     ConfigFetched(fetch::Result<Config>),
@@ -548,7 +545,7 @@ fn update(msg: Msg, model: &mut Model, orders: &mut impl Orders<Msg>) {
                         orders.perform_cmd(async move {
                             Client::new(Token::default())
                                 .instagram(insta_page_id, &page_token)
-                                .ig_mdeia_container(post_param,"video".to_string())
+                                .ig_media_container(post_param, "video".to_string())
                                 .await
                                 .map_or_else(Msg::InstaPostFailed, Msg::InstaContainerResponse)
                         });

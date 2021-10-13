@@ -69,7 +69,7 @@ impl InstagramPostApi {
     ///
     /// Currently, it takes about video seconds to a minute for the post contsiner to be ready.
     ///
-    pub async fn ig_mdeia_container(
+    pub async fn ig_media_container(
         self,
         post_params: InstaPostParams,
         post_type: String,
@@ -106,7 +106,7 @@ impl InstagramPostApi {
     ) -> seed::fetch::Result<InstaMediaConatiner> {
         let self_data = self.clone();
         let ig_container_id = self
-            .ig_mdeia_container(post_param, "video".to_string())
+            .ig_media_container(post_param, "video".to_string())
             .await;
 
         if ig_container_id.is_ok() {
